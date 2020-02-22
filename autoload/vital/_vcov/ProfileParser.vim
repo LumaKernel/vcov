@@ -4,7 +4,7 @@
 function! s:_SID() abort
   return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
 endfunction
-execute join(['function! vital#_vcov#ProfileParser#import() abort', printf("return map({'parse': '', 'merge': ''}, \"vital#_vcov#function('<SNR>%s_' . v:key)\")", s:_SID()), 'endfunction'], "\n")
+execute join(['function! vital#_vcov#ProfileParser#import() abort', printf("return map({'_vital_depends': '', 'parse': '', 'normalize_path': '', 'merge': '', '_vital_loaded': ''}, \"vital#_vcov#function('<SNR>%s_' . v:key)\")", s:_SID()), 'endfunction'], "\n")
 delfunction s:_SID
 " ___vital___
 " Vim Profile Parser
@@ -18,7 +18,14 @@ let s:section_types = [
 let s:float_pat = '\%(\d\+\%(\.\d\+\)\?\)'  " like  0.0  0  , safe for str2float()
 let s:_continue_pat = '^\s*\\'
 
-let s:F = vital#luv#import('System.Filepath')
+function! s:_vital_depends() abort
+  return [
+        \ 'System.Filepath',
+        \]
+endfunction
+function! s:_vital_loaded(V) abort
+  let s:F = a:V.import('System.Filepath')
+endfunction
 
 function! s:normalize_path(path) abort
   return s:F.unify_separator(s:F.remove_last_separator(s:F.realpath(s:F.abspath(a:path))))
