@@ -1,6 +1,6 @@
 
 $VCOV_VIM = @($env:VCOV_VIM, "vim")[[string]::IsNullOrEmpty($env:VCOV_VIM)]
-$VCOV_HOME = @($env:VCOV_HOME, (pwd).path)[[string]::IsNullOrEmpty($env:VCOV_HOME)]
+$VCOV_HOME = @($env:VCOV_HOME, (Resolve-Path "$PSScriptRoot/..").path)[[string]::IsNullOrEmpty($env:VCOV_HOME)]
 
 $SCRIPT_NAME = "$VCOV_HOME/macros/vcov-start.vim"
 $VERSION = (& $VCOV_VIM --version)[0]
@@ -20,6 +20,4 @@ if ( $IS_VIM ) {
   Write-Error "vcov: Info: Set `$env:VCOV_VIM to your vim path."
   exit 1
 }
-
-
 
