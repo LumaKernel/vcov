@@ -193,7 +193,7 @@ function s:merge(...) abort
       let queue += section
     else
       if section.type ==# 'script'
-        let path = fnamemodify(resolve(expand(section.path)), ':p')
+        let path = resolve(expand(section.path))
         if has_key(scripts, path)
          call s:_merge_script(scripts[path], deepcopy(section))
         else
@@ -206,7 +206,7 @@ function s:merge(...) abort
   endwhile
 
   for func in functions
-    let path = fnamemodify(resolve(expand(func.defined.path)), ':p')
+    let path = resolve(expand(func.defined.path))
     if has_key(scripts, path)
       call s:_merge_function(scripts[path], deepcopy(func))
     endif
