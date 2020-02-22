@@ -67,7 +67,7 @@ function! s:_to_lcov_one(section) abort
       let is_inst = s:_is_instrumental(
             \   collected . substitute(line.content, s:_continue_pat, '', '')
             \ )
-      let collected .= ''
+      let collected = ''
       if is_inst
         let hits = get(line, 'count', 0)
       endif

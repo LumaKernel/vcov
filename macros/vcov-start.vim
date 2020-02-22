@@ -28,7 +28,7 @@ let s:argparser = vcov#binarizer#argparser#new('vcov', {
       \   'options': s:options,
       \   'help_flags': s:help_flags,
       \   'version_flags': s:version_flags,
-      \   'version': '0.1.1',
+      \   'version': '0.1.2',
       \ })
 
 let s:print_initialize = function('vcov#binarizer#print#print_initialize')
