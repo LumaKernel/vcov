@@ -3,17 +3,17 @@
 Vim Script coverage tool.
 
 
-# Dependencies
+## Dependencies
 
 - Vim or neovim
 
 
-# Installation
+## Installation
 
 Clone and pass the vcov/bin path to PATH environment.
 
 
-# Usage
+## Usage
 
 1. Take a profile by yourself.
 
@@ -41,7 +41,7 @@ $ # open index.html in your favorite browser
 ```
 
 
-# VS https://github.com/Vimjas/covimerage
+## VS https://github.com/Vimjas/covimerage
 
 - Work with the line hits.
 - Based on `lcov(1)`, so you can use `genhtml(1)` to check the result.
