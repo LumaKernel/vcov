@@ -60,20 +60,16 @@ function! s:_to_lcov_one(section) abort
   while idx < len(a:section.lines)
     let line = a:section.lines[idx]
     let hits = v:null
-    if has_key(line, 'count')
-      let hits = line.count
+    let next = get(get(a:section.lines, idx + 1, {}), 'content', v:null)
+    if next isnot v:null && next =~# s:_continue_pat
+      let collected .= line.content
     else
-      let next = get(get(a:section.lines, idx + 1, {}), 'content', v:null)
-      if next isnot v:null && next =~# s:_continue_pat
-        let collected .= line.content
-      else
-        let is_inst = s:_is_instrumental(
-              \   collected . substitute(line.content, s:_continue_pat, '', '')
-              \ )
-        let collected .= ''
-        if is_inst
-          let hits = 0
-        endif
+      let is_inst = s:_is_instrumental(
+            \   collected . substitute(line.content, s:_continue_pat, '', '')
+            \ )
+      let collected .= ''
+      if is_inst
+        let hits = get(line, 'count', 0)
       endif
     endif
     if hits isnot v:null
