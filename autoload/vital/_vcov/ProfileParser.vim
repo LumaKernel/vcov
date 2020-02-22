@@ -16,6 +16,7 @@ let s:section_types = [
       \   [ '^SCRIPT\>', 's:_parse_script_section'],
       \ ]
 let s:float_pat = '\%(\d\+\%(\.\d\+\)\?\)'  " like  0.0  0  , safe for str2float()
+let s:_continue_pat = '^\s*\\'
 
 function! s:parse(lines) abort
   let next = 0
@@ -98,7 +99,7 @@ function! s:_parse_function_section(lines) abort
       endif
     endif
 
-    let pat = '^Sourced\s\+\(\d\+\)'
+    let pat = '^Called\s\+\(\d\+\)'
     if line =~? pat && !has_key(res, 'count')
       let res.count = str2nr(matchlist(line, pat)[1])
     endif
@@ -219,6 +220,9 @@ function! s:_merge_script(script0, script1) abort
   let idx = 0
   while idx < len(a:script1.lines)
     let line = a:script1.lines[idx]
+    if len(a:script0.lines) < idx
+      call add(a:script0.lines, copy(a:script1.lines[idx]))
+    endif
     let a:script0.lines[idx].count =
           \ get(a:script0.lines[idx], 'count', 0)
           \ + get(line, 'count', 0)
@@ -227,16 +231,23 @@ function! s:_merge_script(script0, script1) abort
 endfunction
 
 function! s:_merge_function(script, func) abort
-  let defined_line = a:func.defined.line
   let idx = 0
+  let defined_idx = a:func.defined.line
   while idx < len(a:func.lines)
     let line = a:func.lines[idx]
-    if defined_line + idx < len(a:script.lines)
-      let a:script.lines[defined_line + idx].count =
-            \ get(a:script.lines[defined_line + idx], 'count', 0)
+ 
+    while defined_idx < len(a:script.lines)
+          \ && a:script.lines[defined_idx].content =~# s:_continue_pat
+      let defined_idx += 1
+    endwhile
+
+    if defined_idx < len(a:script.lines)
+      let a:script.lines[defined_idx].count =
+            \ get(a:script.lines[defined_idx], 'count', 0)
             \ + get(line, 'count', 0)
     endif
     let idx += 1
+    let defined_idx += 1
   endwhile
 endfunction
 
