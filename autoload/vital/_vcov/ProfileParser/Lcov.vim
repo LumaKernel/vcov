@@ -57,20 +57,23 @@ function! s:_to_lcov_one(section) abort
   let branch_idx = 0
 
   let collected = ''
+  let collected_count = 0
   while idx < len(a:section.lines)
     let line = a:section.lines[idx]
     let hits = v:null
     let next = get(get(a:section.lines, idx + 1, {}), 'content', v:null)
     if next isnot v:null && next =~# s:_continue_pat
       let collected .= line.content
+      let collected_count = max([collected_count, get(line, 'count', 0)])
     else
       let is_inst = s:_is_instrumental(
             \   collected . substitute(line.content, s:_continue_pat, '', '')
             \ )
-      let collected = ''
       if is_inst
-        let hits = get(line, 'count', 0)
+        let hits = max([get(line, 'count', 0), collected_count])
       endif
+      let collected = ''
+      let collected_count = 0
     endif
     if hits isnot v:null
       let line_found += 1
