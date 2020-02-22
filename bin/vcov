@@ -1,0 +1,26 @@
+#!/bin/sh
+
+VCOV_VIM=${VCOV_VIM:-vim}
+VCOV_HOME=${VCOV_HOME:-"$(dirname "$(dirname "$(realpath "$0")")")"}
+
+SCRIPT_NAME=$VCOV_HOME/macros/vcov-start.vim
+VERSION=$("$VCOV_VIM" --version | head -n 1)
+IS_VIM=0
+IS_NVIM=0
+
+if [ "${VERSION#VIM}" != "$VERSION" ]; then
+  IS_VIM=1
+elif [ "${VERSION#NVIM}" != "$VERSION" ]; then
+  IS_NVIM=1
+fi
+
+if [ $IS_VIM = 1 ]; then
+  "$VCOV_VIM" -n -N -e -s -i NONE -u $SCRIPT_NAME -- "$@"
+elif [ $IS_NVIM = 1 ]; then
+  "$VCOV_VIM" -n -N -e -s --headless -i NONE -u $SCRIPT_NAME -- "$@"
+else
+  echo "vcov: Error: Vim or neovim executable not found" 1>&2
+  echo "vcov: Info: Set \$VCOV_VIM to your vim path." 1>&2
+  exit 1
+fi
+
