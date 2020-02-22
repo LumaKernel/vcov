@@ -28,7 +28,7 @@ let s:argparser = vcov#binarizer#argparser#new('vcov', {
       \   'options': s:options,
       \   'help_flags': s:help_flags,
       \   'version_flags': s:version_flags,
-      \   'version': '0.1.5',
+      \   'version': '0.1.6',
       \ })
 
 let s:print_initialize = function('vcov#binarizer#print#print_initialize')
@@ -39,9 +39,9 @@ let s:debug = function('vcov#internal#debug#debug')
 
 function! s:start(values) abort
   let merge =
-        \ len(filter(copy(a:values), {i, v -> get(v, 'key') ==# 'merge'}))
-        \ + len(filter(copy(a:values), {i, v -> get(v, 'key') ==# 'output'})) ? 1 : 0
-  let output = get(filter(copy(a:values), {i, v -> get(v, 'key') ==# 'output'}), -1, {'value': 'vimprofile.lcov.info'}).value
+        \ len(filter(copy(a:values), {i, v -> get(v, 'key') is# 'merge'}))
+        \ + len(filter(copy(a:values), {i, v -> get(v, 'key') is# 'output'})) ? 1 : 0
+  let output = get(filter(copy(a:values), {i, v -> get(v, 'key') is# 'output'}), -1, {'value': 'vimprofile.lcov.info'}).value
   let inputs = map(filter(copy(a:values), {i, v -> !has_key(v, 'key')}), 'v:val.value')
 
   call s:debug('is merge', merge)
