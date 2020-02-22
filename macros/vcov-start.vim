@@ -64,6 +64,7 @@ function! s:start(values) abort
     else
       let output_one = input . '.lcov.info'
       try
+        silent! call mkdir(fnamemodify(output_one, ':p:h'), 'p')
         call writefile(lcov, output_one)
       catch /.*/
         echom v:throwpoint
@@ -75,6 +76,7 @@ function! s:start(values) abort
 
   if merge
     try
+      silent! call mkdir(fnamemodify(output, ':p:h'), 'p')
       call writefile(merged_lcov, output)
     catch /.*/
       echom v:throwpoint
@@ -122,32 +124,12 @@ function! s:main(argv) abort
     call s:println('vcov: ' . v:exception, s:COLOR.RED)
     call s:print_finalize()
 
-    try
-      set rtp+=~/vim-make-plugin/vim-messages-qf
-      call mkdir('.dev', 'p')
-      call messages_qf#util#dump('.dev/debug.json')
-    catch /.*/
-      call s:debug(v:exception)
-      call s:debug(v:throwpoint)
-    endtry
-
     cquit!
   catch /.*/
     call s:println('vcov: Fatal: Unexpected error occured.', s:COLOR.RED)
     call s:println(v:exception, s:COLOR.RED)
     call s:println(v:throwpoint)
     call s:print_finalize()
-
-    try
-      echom v:throwpoint
-      echom v:exception
-      set rtp+=~/vim-make-plugin/vim-messages-qf
-      call mkdir('.dev', 'p')
-      call messages_qf#util#dump('.dev/debug.json')
-    catch /.*/
-      call s:debug(v:exception)
-      call s:debug(v:throwpoint)
-    endtry
 
     cquit!
   endtry
