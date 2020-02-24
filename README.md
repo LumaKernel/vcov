@@ -70,9 +70,9 @@ Also please use newer version of vcov.
 
 Any of patches, issues, and wiki pages are welcome !
 
-## VS https://github.com/Vimjas/covimerage
+## VS [Vimjas/covimerage](https://github.com/Vimjas/covimerage)
 
-- Work with the line hits.
+- Work with the number of line hits.
 - Based on `lcov(1)`, so you can use `genhtml(1)` to check the result.
 
 ## Thanks
