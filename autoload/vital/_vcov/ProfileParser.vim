@@ -4,7 +4,7 @@
 function! s:_SID() abort
   return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
 endfunction
-execute join(['function! vital#_vcov#ProfileParser#import() abort', printf("return map({'_vital_depends': '', 'parse': '', 'normalize_path': '', 'merge': '', '_vital_loaded': ''}, \"vital#_vcov#function('<SNR>%s_' . v:key)\")", s:_SID()), 'endfunction'], "\n")
+execute join(['function! vital#_vcov#ProfileParser#import() abort', printf("return map({'_vital_depends': '', 'parse': '', 'merge': '', '_vital_loaded': ''}, \"vital#_vcov#function('<SNR>%s_' . v:key)\")", s:_SID()), 'endfunction'], "\n")
 delfunction s:_SID
 " ___vital___
 " Vim Profile Parser
@@ -27,8 +27,8 @@ function! s:_vital_loaded(V) abort
   let s:F = a:V.import('System.Filepath')
 endfunction
 
-function! s:normalize_path(path) abort
-  return s:F.unify_separator(s:F.remove_last_separator(s:F.realpath(s:F.abspath(a:path))))
+function! s:_normalize_path(path) abort
+  return s:F.unify_separator(s:F.remove_last_separator(resolve(expand(a:path))))
 endfunction
 
 function! s:parse(lines) abort
@@ -206,7 +206,7 @@ function s:merge(...) abort
       let queue += section
     else
       if section.type ==# 'script'
-        let path = s:normalize_path(section.path)
+        let path = s:_normalize_path(section.path)
         if has_key(scripts, path)
          call s:_merge_script(scripts[path], deepcopy(section))
         else
@@ -219,7 +219,7 @@ function s:merge(...) abort
   endwhile
 
   for func in functions
-    let path = s:normalize_path(func.defined.path)
+    let path = s:_normalize_path(func.defined.path)
     if has_key(scripts, path)
       call s:_merge_function(scripts[path], deepcopy(func))
     endif
