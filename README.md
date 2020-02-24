@@ -40,7 +40,7 @@ $ genhtml lcov.info
 $ # open index.html in your favorite browser
 ```
 
-### For more informatoin
+### For more information
 
 ```
 $ vcov --help
