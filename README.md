@@ -42,6 +42,11 @@ $ # open index.html in your favorite browser
 
 ## Examples
 
+I recommend you use as newer version of vim as possible.
+Older versions of vim is not supported to produce the proper profile data.
+
+Also please use newer version of vcov.
+
 ### Migration from covimerage to vcov
 
 - [LumaKernel/vital-Luv](https://github.com/LumaKernel/vital-Luv/pull/11/commits/e366035b3ea8e929bc09d5c78dd0644c95fa01c8#diff-a6604e4f5e99849aa2479a650e4f96f8)
