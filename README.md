@@ -82,3 +82,7 @@ Any of patches, issues, and wiki pages are welcome !
 - [thinca/vim-themis](https://github.com/thinca/vim-themis)
   - The binary system is inspired by this.
 
+
+## Licenese
+
+[Unlicense](https://unlicense.org)
