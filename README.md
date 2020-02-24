@@ -1,5 +1,7 @@
 # vcov
 
+[![Powered by vital.vim](https://img.shields.io/badge/powered%20by-vital.vim-80273f.svg?style=flat-square)](https://github.com/vim-jp/vital.vim)
+
 Vim Script coverage tool.
 
 
@@ -74,4 +76,11 @@ Any of patches, issues, and wiki pages are welcome !
 
 - Work with the line hits.
 - Based on `lcov(1)`, so you can use `genhtml(1)` to check the result.
+
+## Thanks
+
+- [Vimjas/covimerage](https://github.com/Vimjas/covimerage)
+  - Inspired by.
+- [thinca/vim-themis](https://github.com/thinca/vim-themis)
+  - The binary system is inspired by this.
 
