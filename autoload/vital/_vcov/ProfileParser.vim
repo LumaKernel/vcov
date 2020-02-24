@@ -100,7 +100,7 @@ function! s:_parse_function_section(lines) abort
     let pat = '^FUNCTION\>\s\+\(.*\)'
     if line =~# pat && !has_key(res, 'name')
       let res.name = matchlist(line, pat)[1]
-      let pat = '\s\+Defined: \(.*\):\(\d\+\)'
+      let pat = '\s\+Defined: \(.*\)\%(:\| line \)\(\d\+\)'
       if itr + 1 < len(a:lines) && a:lines[itr + 1] =~? pat
         let groups = matchlist(a:lines[itr + 1], pat)
         let res.defined = {
