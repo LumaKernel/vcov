@@ -22,7 +22,7 @@ delfunction s:_SID
 
 let s:_possible_comment_pat = '\%(".*\)\?'
 let s:_continue_pat = '^\s*\\'
-let s:_endif_pat = 'en\%[if]'
+let s:_endif_pat = 'en\%[dif]'
 let s:_endfunction_pat = 'endf\%[unction]'
 let s:_endfor_pat = 'endfo\%[r]'
 let s:_endwhile_pat = 'endw\%[hile]'
