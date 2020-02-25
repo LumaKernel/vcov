@@ -27,7 +27,7 @@ profile! file autoload/**/*.vim
 2. Transform vim profile into lcov info file by vcov.
 
 ```sh
-$ vcov vim.profile
+$ vcov vim.profile  # -> vim.profile.lcov.info
 $ # or you can specify output file
 $ vcov vim.profile -o lcov.info
 ```
@@ -37,6 +37,14 @@ $ vcov vim.profile -o lcov.info
 ```sh
 $ genhtml lcov.info
 $ # open index.html in your favorite browser
+```
+
+### Mereg multiple profiles
+
+Accepts multiple profiles.
+
+```sh
+$ vcov vim1.profile vim2.profile vim3.profile -o merged.info
 ```
 
 ### For more information
@@ -81,7 +89,7 @@ Also please use newer version of vcov.
     run: |
       export PATH=$HOME/vcov/bin:$PATH
       vcov --version
-      vcov $THEMIS_PROFILE -o lcov.info
+      vcov vim.profile -o lcov.info
 
   - name: Coveralls
     uses: coverallsapp/github-action@master
@@ -106,7 +114,7 @@ Also please use newer version of vcov.
     run: |
       $env:PATH = "$env:USERPROFILE/vcov/bin;$env:PATH"
       vcov --version
-      vcov $env:THEMIS_PROFILE -o lcov.info
+      vcov vim.profile -o lcov.info
 
   - name: Coveralls
     uses: coverallsapp/github-action@master
