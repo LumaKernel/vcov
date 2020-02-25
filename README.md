@@ -65,6 +65,57 @@ Also please use newer version of vcov.
 - [LumaKernel/vital-Luv](https://github.com/LumaKernel/vital-Luv/blob/master/.github/workflows/Windows-Vim-neovim.yml)
 
 
+### GitHub Actions with [coverallsapp/github-action](https://github.com/coverallsapp/github-action)
+
+#### on Linux
+
+```yaml
+
+# Take profile to vim.profile
+
+  - name: Install vcov
+    run: git clone --depth 1 --branch v0.2.0 --single-branch https://github.com/LumaKernel/vcov $HOME/vcov
+
+
+  - name: Make coverage report
+    run: |
+      export PATH=$HOME/vcov/bin:$PATH
+      vcov --version
+      vcov $THEMIS_PROFILE -o lcov.txt
+
+  - name: Coveralls
+    uses: coverallsapp/github-action@master
+    with:
+      path-to-lcov: ./lcov.info
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+
+#### on Linux
+
+
+```yaml
+
+# Take profile to vim.profile
+
+  - name: Install vcov
+    run: git clone --depth 1 --branch v0.2.0 --single-branch https://github.com/LumaKernel/vcov $env:USERPROFILE/vcov
+
+
+  - name: Make coverage report
+    run: |
+      $env:PATH = "$env:USERPROFILE/vcov/bin;$env:PATH"
+      vcov --version
+      vcov $env:THEMIS_PROFILE -o lcov.txt
+
+  - name: Coveralls
+    uses: coverallsapp/github-action@master
+    with:
+      path-to-lcov: ./lcov.info
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+
 ## Contributing
 
 Any of patches, issues, and wiki pages are welcome !
