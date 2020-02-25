@@ -81,7 +81,7 @@ Also please use newer version of vcov.
     run: |
       export PATH=$HOME/vcov/bin:$PATH
       vcov --version
-      vcov $THEMIS_PROFILE -o lcov.txt
+      vcov $THEMIS_PROFILE -o lcov.info
 
   - name: Coveralls
     uses: coverallsapp/github-action@master
@@ -91,7 +91,7 @@ Also please use newer version of vcov.
 ```
 
 
-#### on Linux
+#### on Windows
 
 
 ```yaml
@@ -106,7 +106,7 @@ Also please use newer version of vcov.
     run: |
       $env:PATH = "$env:USERPROFILE/vcov/bin;$env:PATH"
       vcov --version
-      vcov $env:THEMIS_PROFILE -o lcov.txt
+      vcov $env:THEMIS_PROFILE -o lcov.info
 
   - name: Coveralls
     uses: coverallsapp/github-action@master
